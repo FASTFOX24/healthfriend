@@ -6,6 +6,11 @@ const GlobalStyles = createGlobalStyle`
         padding: 0;
         border: 0;
     }
+    button {
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
 `;
 
 export default GlobalStyles;
