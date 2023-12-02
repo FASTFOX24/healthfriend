@@ -12,8 +12,7 @@ export const HeaderContainer = styled.div<{ $isOpen: boolean }>`
 `;
 export const HeaderBody = styled.div`
   display: flex;
-  max-width: 1023px;
-  min-width: 360px;
+
   justify-content: space-between;
   align-items: center;
   height: 56px;

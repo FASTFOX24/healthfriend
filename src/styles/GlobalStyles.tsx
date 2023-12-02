@@ -11,6 +11,16 @@ const GlobalStyles = createGlobalStyle`
         background: transparent;
         cursor: pointer;
     }
+    a {
+        cursor: pointer
+    }
+    input {
+        border: 1px solid #d1d1d1;
+        border-radius: 99px;
+        &:focus {
+            outline-color: #ff6300;
+        }
+    }
 `;
 
 export default GlobalStyles;
