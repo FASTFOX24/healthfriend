@@ -3,9 +3,9 @@ import * as S from "./styled";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FieldValues, SubmitHandler } from "react-hook-form/dist/types";
-import { joinMembershipSchema } from "../../utils/membership";
+import { joinMembershipSchema, onSubmit } from "../../utils/membership";
 import { useNavigate } from "react-router";
+import { onClickAddr } from "../../utils/etc";
 
 type FormData = Yup.InferType<typeof joinMembershipSchema>;
 
@@ -18,13 +18,6 @@ const JoinMembership = () => {
   } = useForm<FormData>({
     resolver: yupResolver(joinMembershipSchema),
   });
-  const onSubmit: SubmitHandler<FieldValues> = ({
-    identification,
-    password,
-  }) => {
-    console.log(identification);
-    console.log(password);
-  };
   const navigate = useNavigate();
   const changeVisible = () => {
     setVisibleState(!visibleState);
@@ -51,7 +44,7 @@ const JoinMembership = () => {
           <S.TextArea
             {...register("password")}
             type="password"
-            className="inbisible"
+            className="nomalBtn"
             placeholder="비밀번호를 입력하세요"
           />
           <S.ErrorMessage>{errors.password?.message}</S.ErrorMessage>
@@ -69,9 +62,24 @@ const JoinMembership = () => {
           <S.ErrorMessage>{errors.password_confirm?.message}</S.ErrorMessage>
         </S.InputContainer>
         <S.InputContainer>
-          <S.TextArea className="checkBtn" placeholder="주소를 입력하세요" />
-          <S.doubleCheckBtn>주소 찾기</S.doubleCheckBtn>
-          <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+          <S.TextArea
+            id="address"
+            className="checkBtn"
+            placeholder="주소를 입력하세요"
+          />
+          <S.doubleCheckBtn
+            onClick={() => {
+              onClickAddr({ docId: "address" });
+            }}
+          >
+            주소 찾기
+          </S.doubleCheckBtn>
+        </S.InputContainer>
+        <S.InputContainer>
+          <S.TextArea
+            placeholder="상세주소를 입력하세요"
+            className="nomalBtn"
+          />
         </S.InputContainer>
         <S.JoinBtn type="submit" value={"등록 완료하기"} />
       </form>

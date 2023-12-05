@@ -1,4 +1,13 @@
 import * as Yup from "yup";
+import { FieldValues, SubmitHandler } from "react-hook-form/dist/types";
+
+export const onSubmit: SubmitHandler<FieldValues> = ({
+  identification,
+  password,
+}) => {
+  console.log(identification);
+  console.log(password);
+};
 
 // 회원가입
 export const joinMembershipSchema = Yup.object({
@@ -20,4 +29,7 @@ export const joinMembershipSchema = Yup.object({
 });
 
 //로그인
-export const loginSchema = Yup.object({});
+export const loginSchema = Yup.object({
+  identification: Yup.string().required("아이디(이메일)을 입력해 주세요"),
+  password: Yup.string().required("비밀번호를 입력해 주세요"),
+});

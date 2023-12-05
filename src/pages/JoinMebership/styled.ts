@@ -24,10 +24,12 @@ export const InputContainer = styled.div`
 export const TextArea = styled.input`
   height: 12px;
   padding: 12px;
-
+  &.nomalBtn {
+    width: 230px;
+  }
   &.checkBtn {
-    width: 170px;
-    padding-right: 72px;
+    width: 166px;
+    padding-right: 76px;
   }
   &.inbisible {
     width: 194px;

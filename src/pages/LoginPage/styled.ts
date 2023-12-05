@@ -16,18 +16,32 @@ export const LoginTitle = styled.p`
     font-size: 24px;
   }
 `;
+export const FormBox = styled.form`
+display: flex;
+flex-direction: column;
+`
+export const InputContainer = styled.div`
+  position: relative;
+  margin-bottom: 36px;
+`;
 export const TextField = styled.input`
   width: 222px;
   height: 12px;
   padding: 12px 16px;
-  margin-bottom: 24px;
 `;
-export const LoginBtn = styled.button`
+export const ErrorMessage = styled.p`
+  position: absolute;
+  left: 12px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: red;
+`;
+export const LoginBtn = styled.input`
   background-color: #ff6300;
+  border: 0px;
   border-radius: 16px;
   width: 256px;
   height: 36px;
-  margin-top: 24px;
   color: white;
   font-weight: bold;
 `;
