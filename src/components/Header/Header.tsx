@@ -4,10 +4,12 @@ import { useState } from "react";
 import { Twirl as Hamburger } from "hamburger-react";
 import { useNavigate } from "react-router";
 import NavBar from "./NavBar";
+import { auth } from "../../firebase";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  console.log(auth.currentUser?.uid)
   return (
     <S.HeaderContainer $isOpen={isOpen}>
       <S.HeaderBody>

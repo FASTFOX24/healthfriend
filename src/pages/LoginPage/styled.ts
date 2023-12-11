@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
+import { LuEye } from "react-icons/lu";
+import { LuEyeOff } from "react-icons/lu";
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -16,18 +19,48 @@ export const LoginTitle = styled.p`
     font-size: 24px;
   }
 `;
+export const FormBox = styled.form`
+display: flex;
+flex-direction: column;
+`
+export const InputContainer = styled.div`
+  position: relative;
+  margin-bottom: 36px;
+`;
 export const TextField = styled.input`
   width: 222px;
   height: 12px;
   padding: 12px 16px;
-  margin-bottom: 24px;
 `;
-export const LoginBtn = styled.button`
+export const ErrorMessage = styled.p`
+  position: absolute;
+  left: 12px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: red;
+`;
+export const IconBtn = styled.button`
+  font-size: 20px;
+  position: absolute;
+  right: 0px;
+  padding: 10px 16px;
+  color: #828282;
+  cursor: pointer;
+`;
+export const VisibleIcon = styled(LuEye)`
+  font-size: 20px;
+  color: #828282;
+`;
+export const InvisibleIcon = styled(LuEyeOff)`
+  font-size: 20px;
+  color: #828282;
+`;
+export const LoginBtn = styled.input`
   background-color: #ff6300;
+  border: 0px;
   border-radius: 16px;
   width: 256px;
   height: 36px;
-  margin-top: 24px;
   color: white;
   font-weight: bold;
 `;
