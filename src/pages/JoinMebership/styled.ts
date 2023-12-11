@@ -44,6 +44,11 @@ export const doubleCheckBtn = styled.button`
   padding: 4px 8px;
   top: 7px;
   right: 9px;
+  &.checked {
+    border: 0px;
+    background-color: #42c75a;
+    color: white;
+  }
 `;
 export const IconBtn = styled.button`
   font-size: 20px;
@@ -62,12 +67,13 @@ export const InvisibleIcon = styled(LuEyeOff)`
   color: #828282;
 `;
 export const JoinBtn = styled.input`
-  border: 0px;
   background-color: #ff6300;
-  color: white;
+  border: 0px;
   border-radius: 99px;
   width: 256px;
   height: 36px;
+  color: white;
+  font-weight: bold;
 `;
 export const LoginBox = styled.div`
   display: flex;

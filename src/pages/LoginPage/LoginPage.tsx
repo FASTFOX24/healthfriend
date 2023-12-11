@@ -1,37 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styled";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema, onSubmit } from "../../utils/membership";
+import { loginSchema } from "../../utils/membership";
+import { auth, provider } from "../../firebase";
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
+  signOut,
+} from "firebase/auth";
 type FormData = Yup.InferType<typeof loginSchema>;
 const LoginPage = () => {
-  const navigate = useNavigate();
+  const [visibleState, setVisibleState] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(loginSchema),
   });
+  const navigate = useNavigate();
+  const changeVisible = () => {
+    setVisibleState(!visibleState);
+  };
+  const onSubmit = () => {
+    signInWithEmailAndPassword(auth, getValues("email"), getValues("password"))
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.errorCode);
+        setErrorMessage("비밀번호가 일치하지 않습니다.");
+      });
+  };
+  const googleAuth = () => {
+    signInWithPopup(auth, provider)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <S.Container>
       <S.LoginTitle>로그인</S.LoginTitle>
       <S.FormBox onSubmit={handleSubmit(onSubmit)}>
         <S.InputContainer>
           <S.TextField
-            {...register("identification")}
+            {...register("email")}
             placeholder="아이디를 입력하세요"
           />
-          <S.ErrorMessage>{errors.identification?.message}</S.ErrorMessage>
+          <S.ErrorMessage>{errors.email?.message}</S.ErrorMessage>
         </S.InputContainer>
         <S.InputContainer>
           <S.TextField
             {...register("password")}
             placeholder="비밀번호를 입력하세요"
+            type={visibleState ? "" : "password"}
           />
-          <S.ErrorMessage>{errors.password?.message}</S.ErrorMessage>
+          <S.IconBtn onClick={changeVisible}>
+            {visibleState ? <S.InvisibleIcon /> : <S.VisibleIcon />}
+          </S.IconBtn>
+          <S.ErrorMessage>
+            {errors.password?.message || errorMessage}
+          </S.ErrorMessage>
         </S.InputContainer>
         <S.LoginBtn type="submit" value={"운동 시작하기"} />
       </S.FormBox>
@@ -45,7 +86,11 @@ const LoginPage = () => {
           <S.KakaoIcon />
           Kakao
         </S.KakaoAuth>
-        <S.GoogleAuth>
+        <S.GoogleAuth
+          onClick={() => {
+            googleAuth();
+          }}
+        >
           <S.GoogleIcon />
           Google
         </S.GoogleAuth>
