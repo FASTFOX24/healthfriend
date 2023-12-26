@@ -17,3 +17,11 @@ export const onClickAddr: React.FC<addrProps> = ({ docId }) =>
       (document.getElementById(docId) as HTMLInputElement).value = data.address;
     },
   }).open();
+
+// 수 단위 구분
+export const addComma = (point: number) => {
+  const result = point
+    .toString()
+    .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return result;
+};

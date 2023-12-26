@@ -1,28 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as S from "./style";
 import { useNavigate } from "react-router";
 import NestedList from "./NestedList";
+import { auth } from "../../firebase";
 
+import { getData } from "../../utils/aip";
+import { onAuthStateChanged } from "firebase/auth";
+import { navBarList, userData } from "../../utils/globalData";
+import { useRecoilState } from "recoil";
+import { addComma } from "../../utils/etc";
 interface NavBarProps {
   isOpen: boolean;
 }
-
 const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
-  const NavBarList = [
-    { btnName: "홈", path: "/" },
-    { btnName: "운동시설 보기", path: "/list_gym" },
-    { btnName: "이용권 구매 내역", path: "/list_ticket" },
-    {
-      btnName: "더 보기",
-      list: [
-        { btnName: "마이프로필", path: "/profile" },
-        { btnName: "이벤트", path: "/event" },
-        { btnName: "커뮤니티", path: "/comunity" },
-      ],
-    },
-  ];
+  const user = auth.currentUser;
   const navigate = useNavigate();
-  const list = NavBarList.map((btn) => {
+  const [userInfo, setUserInfo] = useRecoilState(userData);
+  const list = navBarList.map((btn) => {
     if (btn.list) {
       return (
         <NestedList
@@ -44,29 +38,54 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
       );
     }
   });
+  useEffect(() => {
+    if (user?.uid) {
+      console.log("run");
+      onAuthStateChanged(auth, (user) => {
+        getData({ url: `/users/${user?.uid}` }).then((result) => {
+          setUserInfo(result);
+        });
+      });
+    }
+  }, [setUserInfo, user?.uid]);
   return (
     <S.NavBar $isOpen={isOpen}>
-      <S.LoginBox>
-        <S.TextBox_1>
-          로그인 후 이용하시면 <br />
-          할인 쿠폰과 추가 혜택을 받을 수 있어요.
-        </S.TextBox_1>
-        <S.LoginBtn
-          onClick={() => {
-            navigate("/auth/login");
-          }}
-        >
-          로그인
-        </S.LoginBtn>
-      </S.LoginBox>
+      {user?.uid ? (
+        <S.LoginBox>
+          <S.ProfileBtn>
+            <S.UserIcon></S.UserIcon>
+            <S.DisplayName>{userInfo.displayName}</S.DisplayName>
+          </S.ProfileBtn>
+        </S.LoginBox>
+      ) : (
+        <S.LoginBox>
+          <S.TextBox_1>
+            로그인 후 이용하시면 <br /> 할인 쿠폰과 추가 혜택을 받을 수 있어요.
+          </S.TextBox_1>
+          <S.LoginBtn
+            onClick={() => {
+              navigate("/auth/login");
+            }}
+          >
+            로그인
+          </S.LoginBtn>
+        </S.LoginBox>
+      )}
+
       <S.CouponBox>
         <S.TextBox_2>
-          -<br />
+          {user?.uid ? addComma(userInfo.point) : "-"}
+          <br />
           포인트
         </S.TextBox_2>
         <S.Divider />
         <S.TextBox_2>
-          -<br />
+          {!user?.uid
+            ? "-"
+            : !userInfo.coupon
+            ? "0 개"
+            : Object.keys(userInfo.coupon).length + " 개"}
+          <br />
           할인쿠폰
         </S.TextBox_2>
       </S.CouponBox>
