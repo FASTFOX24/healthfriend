@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as S from "./styled";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
@@ -6,25 +6,23 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../utils/membership";
 import { auth, provider } from "../../firebase";
-import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signInWithRedirect,
-  signOut,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { userData } from "../../utils/globalData";
+import { useSetRecoilState } from "recoil";
+import { getData } from "../../utils/aip";
 type FormData = Yup.InferType<typeof loginSchema>;
 const LoginPage = () => {
-  const [visibleState, setVisibleState] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(loginSchema),
   });
+  const setUserData = useSetRecoilState(userData);
+  const [visibleState, setVisibleState] = useState(false);
   const navigate = useNavigate();
   const changeVisible = () => {
     setVisibleState(!visibleState);
@@ -32,13 +30,17 @@ const LoginPage = () => {
   const onSubmit = () => {
     signInWithEmailAndPassword(auth, getValues("email"), getValues("password"))
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(user);
+        getData({ url: `/users/${userCredential.user.uid}` }).then((result) => {
+          setUserData(result);
+        });
         navigate("/");
       })
       .catch((error) => {
         console.log(error.errorCode);
-        setErrorMessage("비밀번호가 일치하지 않습니다.");
+        setError("password", {
+          type: "manual",
+          message: "비밀번호가 일치하지 않습니다.",
+        });
       });
   };
   const googleAuth = () => {
@@ -70,9 +72,7 @@ const LoginPage = () => {
           <S.IconBtn onClick={changeVisible}>
             {visibleState ? <S.InvisibleIcon /> : <S.VisibleIcon />}
           </S.IconBtn>
-          <S.ErrorMessage>
-            {errors.password?.message || errorMessage}
-          </S.ErrorMessage>
+          <S.ErrorMessage>{errors.password?.message}</S.ErrorMessage>
         </S.InputContainer>
         <S.LoginBtn type="submit" value={"운동 시작하기"} />
       </S.FormBox>

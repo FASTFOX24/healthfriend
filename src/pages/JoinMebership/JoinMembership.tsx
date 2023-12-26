@@ -16,16 +16,17 @@ import { postData } from "../../utils/aip";
 type FormData = Yup.InferType<typeof joinMembershipSchema>;
 
 const JoinMembership = () => {
-  const [visibleState, setVisibleState] = useState(false);
-  const [doubleCheck, setDoubleCheck] = useState(false);
   const {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(joinMembershipSchema),
   });
+  const [visibleState, setVisibleState] = useState(false);
+  const [doubleCheck, setDoubleCheck] = useState(false);
   const navigate = useNavigate();
   const changeVisible = () => {
     setVisibleState(!visibleState);
@@ -51,18 +52,27 @@ const JoinMembership = () => {
     )
       .then((userCredential) => {
         postData({
-          url: `users/${getValues("nickname")}`,
+          url: `users/${userCredential.user.uid}`,
           data: {
-            uid: userCredential.user.uid,
+            displayName: getValues("nickname"),
             email: getValues("email"),
             password: getValues("password"),
             addreess: `${getValues("address")} ${getValues("detailAddress")}`,
+            point: 0,
+            coupon: {
+              NEWMEMBERCOUPON: { title: "신규회원 할인쿠폰", per: 15},
+            },
           },
         });
         navigate("/auth/login");
       })
       .catch((error) => {
-        console.error(error);
+        if (error.code === "auth/email-already-in-use") {
+          setError("email", {
+            type: "manual",
+            message: "이미 사용중인 이메일입니다.",
+          });
+        }
       });
   };
   return (

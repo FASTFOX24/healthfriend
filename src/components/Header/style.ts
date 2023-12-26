@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import { PiUserCircleFill } from "react-icons/pi";
 
 export const HeaderContainer = styled.div<{ $isOpen: boolean }>`
   position: sticky;
@@ -69,6 +70,19 @@ export const LoginBtn = styled.a`
     font-size: 12px;
   }
 `;
+export const ProfileBtn = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export const UserIcon = styled(PiUserCircleFill)`
+  font-size: 48px;
+  color: white;
+`;
+export const DisplayName = styled.span`
+  color: white;
+  font-size: 16px;
+`;
 export const CouponBox = styled.div`
   display: flex;
   justify-content: space-around;
@@ -82,7 +96,7 @@ export const CouponBox = styled.div`
 `;
 export const TextBox_2 = styled.p`
   text-align: center;
-  line-height: 24px;
+  line-height: 20px;
   color: white;
   font-size: 12px;
   width: 50%;
