@@ -1,5 +1,5 @@
 import React from "react";
-import * as S from "./style";
+import * as S from "./styled";
 import { useState } from "react";
 import { Twirl as Hamburger } from "hamburger-react";
 import { useNavigate } from "react-router";

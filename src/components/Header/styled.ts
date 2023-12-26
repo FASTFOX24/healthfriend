@@ -8,12 +8,12 @@ export const HeaderContainer = styled.div<{ $isOpen: boolean }>`
   top: 0px;
   display: flex;
   flex-direction: column;
+  width: 100%;
   z-index: 99;
   backdrop-filter: ${($isOpen) => ($isOpen ? "blur(10px)" : "none")};
 `;
 export const HeaderBody = styled.div`
   display: flex;
-
   justify-content: space-between;
   align-items: center;
   height: 56px;

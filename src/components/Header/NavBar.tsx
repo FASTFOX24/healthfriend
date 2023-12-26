@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import * as S from "./style";
+import * as S from "./styled";
 import { useNavigate } from "react-router";
 import NestedList from "./NestedList";
 import { auth } from "../../firebase";
