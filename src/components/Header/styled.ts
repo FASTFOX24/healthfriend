@@ -16,7 +16,7 @@ export const HeaderBody = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 56px;
+  height: 64px;
 `;
 export const TitleBtn = styled.button<{ onClick: () => void }>`
   font-size: 24px;
