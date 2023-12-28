@@ -17,6 +17,7 @@ export const HeaderBody = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 64px;
+  background-color: white;
 `;
 export const TitleBtn = styled.button<{ onClick: () => void }>`
   font-size: 24px;
@@ -31,10 +32,15 @@ export const SearchIcon = styled(IoSearch)`
 `;
 export const NavBar = styled.div<{ $isOpen: boolean }>`
   width: 360px;
-  height: calc(100vh - 56px);
-  display: ${({ $isOpen }) => ($isOpen ? "hidden" : "none")};
+  height: calc(100vh - 64px);
+  position: fixed;
+  top: 64px;
+  left: ${({ $isOpen }) => ($isOpen ? "0" : "-360px")};
+  display: flex;
   flex-direction: column;
   background-color: #d1d1d1;
+  z-index: 1000;
+  transition: left 0.3s ease;
   @media (max-width: 767px) {
     width: 240px;
   }

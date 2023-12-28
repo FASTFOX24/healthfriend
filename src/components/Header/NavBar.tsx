@@ -40,7 +40,6 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
   });
   useEffect(() => {
     if (user?.uid) {
-      console.log("run");
       onAuthStateChanged(auth, (user) => {
         getData({ url: `/users/${user?.uid}` }).then((result) => {
           setUserInfo(result);
@@ -49,48 +48,49 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
     }
   }, [setUserInfo, user?.uid]);
   return (
-    <S.NavBar $isOpen={isOpen}>
-      {user?.uid ? (
-        <S.LoginBox>
-          <S.ProfileBtn>
-            <S.UserIcon></S.UserIcon>
-            <S.DisplayName>{userInfo.displayName}</S.DisplayName>
-          </S.ProfileBtn>
-        </S.LoginBox>
-      ) : (
-        <S.LoginBox>
-          <S.TextBox_1>
-            로그인 후 이용하시면 <br /> 할인 쿠폰과 추가 혜택을 받을 수 있어요.
-          </S.TextBox_1>
-          <S.LoginBtn
-            onClick={() => {
-              navigate("/auth/login");
-            }}
-          >
-            로그인
-          </S.LoginBtn>
-        </S.LoginBox>
-      )}
+      <S.NavBar $isOpen={isOpen}>
+        {user?.uid ? (
+          <S.LoginBox>
+            <S.ProfileBtn>
+              <S.UserIcon></S.UserIcon>
+              <S.DisplayName>{userInfo.displayName}</S.DisplayName>
+            </S.ProfileBtn>
+          </S.LoginBox>
+        ) : (
+          <S.LoginBox>
+            <S.TextBox_1>
+              로그인 후 이용하시면 <br /> 할인 쿠폰과 추가 혜택을 받을 수
+              있어요.
+            </S.TextBox_1>
+            <S.LoginBtn
+              onClick={() => {
+                navigate("/auth/login");
+              }}
+            >
+              로그인
+            </S.LoginBtn>
+          </S.LoginBox>
+        )}
 
-      <S.CouponBox>
-        <S.TextBox_2>
-          {user?.uid ? addComma(userInfo.point) : "-"}
-          <br />
-          포인트
-        </S.TextBox_2>
-        <S.Divider />
-        <S.TextBox_2>
-          {!user?.uid
-            ? "-"
-            : !userInfo.coupon
-            ? "0 개"
-            : Object.keys(userInfo.coupon).length + " 개"}
-          <br />
-          할인쿠폰
-        </S.TextBox_2>
-      </S.CouponBox>
-      {list}
-    </S.NavBar>
+        <S.CouponBox>
+          <S.TextBox_2>
+            {user?.uid ? addComma(userInfo.point) : "-"}
+            <br />
+            포인트
+          </S.TextBox_2>
+          <S.Divider />
+          <S.TextBox_2>
+            {!user?.uid
+              ? "-"
+              : !userInfo.coupon
+              ? "0 개"
+              : Object.keys(userInfo.coupon).length + " 개"}
+            <br />
+            할인쿠폰
+          </S.TextBox_2>
+        </S.CouponBox>
+        {list}
+      </S.NavBar>
   );
 };
 

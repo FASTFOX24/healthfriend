@@ -5,3 +5,8 @@ export const PageContainer = styled.div`
   flex-direction: column;
   height: 200vh;
 `;
+export const ButtonBox = styled.div`
+display: flex;
+justify-content: flex-end;
+padding: 16px;
+`
