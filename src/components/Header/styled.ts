@@ -1,22 +1,23 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import { PiUserCircleFill } from "react-icons/pi";
 
 export const HeaderContainer = styled.div<{ $isOpen: boolean }>`
   position: sticky;
   top: 0px;
   display: flex;
   flex-direction: column;
+  width: 100%;
   z-index: 99;
   backdrop-filter: ${($isOpen) => ($isOpen ? "blur(10px)" : "none")};
 `;
 export const HeaderBody = styled.div`
   display: flex;
-  max-width: 1023px;
-  min-width: 360px;
   justify-content: space-between;
   align-items: center;
-  height: 56px;
+  height: 64px;
+  background-color: white;
 `;
 export const TitleBtn = styled.button<{ onClick: () => void }>`
   font-size: 24px;
@@ -31,10 +32,15 @@ export const SearchIcon = styled(IoSearch)`
 `;
 export const NavBar = styled.div<{ $isOpen: boolean }>`
   width: 360px;
-  height: calc(100vh - 56px);
-  display: ${({ $isOpen }) => ($isOpen ? "hidden" : "none")};
+  height: calc(100vh - 64px);
+  position: fixed;
+  top: 64px;
+  left: ${({ $isOpen }) => ($isOpen ? "0" : "-360px")};
+  display: flex;
   flex-direction: column;
   background-color: #d1d1d1;
+  z-index: 1000;
+  transition: left 0.3s ease;
   @media (max-width: 767px) {
     width: 240px;
   }
@@ -70,6 +76,19 @@ export const LoginBtn = styled.a`
     font-size: 12px;
   }
 `;
+export const ProfileBtn = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export const UserIcon = styled(PiUserCircleFill)`
+  font-size: 48px;
+  color: white;
+`;
+export const DisplayName = styled.span`
+  color: white;
+  font-size: 16px;
+`;
 export const CouponBox = styled.div`
   display: flex;
   justify-content: space-around;
@@ -83,7 +102,7 @@ export const CouponBox = styled.div`
 `;
 export const TextBox_2 = styled.p`
   text-align: center;
-  line-height: 24px;
+  line-height: 20px;
   color: white;
   font-size: 12px;
   width: 50%;
