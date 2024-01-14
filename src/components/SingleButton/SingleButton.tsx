@@ -3,11 +3,10 @@ import styled from "styled-components";
 
 interface ButtonProps {
   buttonName: string;
-  action: any;
 }
-const SingleButton = ({ buttonName, action }: ButtonProps) => {
+const SingleButton = ({ buttonName }: ButtonProps) => {
   return (
-    <ButtonContainer onClick={action}>
+    <ButtonContainer>
       <ButtonName>{buttonName}</ButtonName>
     </ButtonContainer>
   );
@@ -16,5 +15,9 @@ const SingleButton = ({ buttonName, action }: ButtonProps) => {
 export default SingleButton;
 
 const ButtonContainer = styled.button`
-  border: 2px solid #d1d1d1;`;
+  margin-left: 8px;
+  border: 2px solid #d1d1d1;
+  border-radius: 16px;
+  padding: 8px 16px;
+`;
 const ButtonName = styled.span``;
