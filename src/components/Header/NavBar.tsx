@@ -41,7 +41,7 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen }) => {
   useEffect(() => {
     if (user?.uid) {
       onAuthStateChanged(auth, (user) => {
-        getData({ url: `/users/${user?.uid}` }).then((result) => {
+        getData(`/users/${user?.uid}`).then((result) => {
           setUserInfo(result);
         });
       });

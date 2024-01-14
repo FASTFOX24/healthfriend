@@ -31,15 +31,15 @@ export const SearchIcon = styled(IoSearch)`
   font-size: 20px;
 `;
 export const NavBar = styled.div<{ $isOpen: boolean }>`
-  width: 360px;
-  height: calc(100vh - 64px);
   position: fixed;
   top: 64px;
   left: ${({ $isOpen }) => ($isOpen ? "0" : "-360px")};
   display: flex;
   flex-direction: column;
-  background-color: #d1d1d1;
+  width: 360px;
+  height: calc(100vh - 64px);
   z-index: 1000;
+  background-color: #d1d1d1;
   transition: left 0.3s ease;
   @media (max-width: 767px) {
     width: 240px;

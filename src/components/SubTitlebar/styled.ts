@@ -6,8 +6,10 @@ export const SubTitlebarContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   padding: 52px 0px;
   background-color: #ff6300;
+
 `;
 export const SubTitle = styled.div`
   font-size: 24px;

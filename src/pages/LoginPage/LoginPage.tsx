@@ -30,7 +30,7 @@ const LoginPage = () => {
   const onSubmit = () => {
     signInWithEmailAndPassword(auth, getValues("email"), getValues("password"))
       .then((userCredential) => {
-        getData({ url: `/users/${userCredential.user.uid}` }).then((result) => {
+        getData(`/users/${userCredential.user.uid}`).then((result) => {
           setUserData(result);
         });
         navigate("/");
