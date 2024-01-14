@@ -14,7 +14,11 @@ export const navBarList = [
     ],
   },
 ];
-
+export const gymSortList = [
+  { btnName: "낮은 가격순", sortName: "price_low" },
+  { btnName: "높은 가격순", sortName: "price_high" },
+  { btnName: "평점순", sortName: "review" },
+];
 //recoil data
 export const userData = atom({
   key: "userData",
@@ -27,3 +31,28 @@ export const userData = atom({
     coupon: {},
   },
 });
+export const gymListData = atom({
+  key: "gymListData",
+  default: {},
+});
+export const gymData = atom({
+  key: "gymData",
+  default: {
+    image: "",
+    name: "",
+    price: 0,
+    reviewCount: 0,
+    reviewScore: 0,
+    id: "",
+  },
+});
+//test
+export const gymInfo = {
+  image:
+    "https://s3.ap-northeast-2.amazonaws.com/stone-i-dagym-centers/images/gyms/17c2afa93c423e94d6/2ZvFyLPufDjjDWQKbgwJKjN75CSe5YWJWj4e.photo_25.900x600.jpg",
+  name: "알수없음",
+  price: 0,
+  reviewRate: 0,
+  review: 0,
+  id: "",
+};
